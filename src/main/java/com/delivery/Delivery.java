@@ -140,9 +140,9 @@ public class Delivery {
                         By.xpath(getXPATHProperties(UL_COMPONENT_RESERVATION_POPUP_XPATH))
                 )
         );
+        System.out.println(ulComponent_Reservation_Popup.getText());
         ulComponent_Reservation_Popup.click();
 
-        System.out.println(ulComponent_Reservation_Popup.getText());
 
         //select button "continue"
         WebElement continueButton_Reservation_Popup = wait.until(
