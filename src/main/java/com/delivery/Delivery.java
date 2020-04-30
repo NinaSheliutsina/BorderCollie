@@ -34,6 +34,7 @@ public class Delivery {
     final static String UL_COMPONENT_RESERVATION_POPUP_XPATH = "ulComponent.Reservation.Popup";
     final static String CONTINUE_BUTTON_RESERVATION_POPUP_XPATH = "continueButton.Reservation.Popup";
     final static String UPDATE_BUTTON_XPATH = "updateButton";
+    final static String POPUP_BUTTON_XPATH = "popupButton";
 
     private static Properties props;
     private static Properties xpath_props;
@@ -46,6 +47,9 @@ public class Delivery {
         //open e-dostavka main page
         driver.get(getProperties(BASE_URL_KEY));
         //select blue button "Enter" in the upper right corner of the Main Page
+/*        WebElement popup_MainPage = driver.findElement(By.xpath(getXPATHProperties(POPUP_BUTTON_XPATH)));
+        popup_MainPage.click();*/
+
         WebElement loginBlueButton_MainPage = driver.findElement(By.xpath(getXPATHProperties(LOGIN_BLUE_BUTTON_MAIN_PAGE_XPATH)));
         loginBlueButton_MainPage.click();
 
@@ -54,20 +58,17 @@ public class Delivery {
 
         //there is PopUp with notification was opened
         //select green link "Enter" that is located below on the popup was opened
-        WebElement enterLink_MainPage_PopUp = wait.until(
+/*        WebElement enterLink_MainPage_PopUp = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
                         By.xpath(getXPATHProperties(ENTER_LINK_MAIN_PAGE_POPUP_XPATH))
                 )
         );
 
-        enterLink_MainPage_PopUp.click();
+        enterLink_MainPage_PopUp.click();*/
 
         authorisation();
-        try {
-            runCycleToSelectDeliveryTime();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        int iterationNumber=0;
+        helloRecursion(iterationNumber);
     }
 
     private static void authorisation() {
@@ -87,6 +88,15 @@ public class Delivery {
                 )
         );
         enterOrangeButton_AccountPage.click();
+    }
+
+    private static void helloRecursion(int iterationNumber){
+        try {
+            runCycleToSelectDeliveryTime();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            helloRecursion(iterationNumber);
+        }
     }
 
     private static void runCycleToSelectDeliveryTime() throws InterruptedException {
